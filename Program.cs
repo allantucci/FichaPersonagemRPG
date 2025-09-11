@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+
 class Atributo
 {
     public string Nome { get; set; }
@@ -134,29 +135,15 @@ class Program
         personagem.Raca = racas[escolhaRaca];
 
         // Escolha da classe
-        Console.WriteLine("\nEscolha a classe:");
+        /*Console.WriteLine("\nEscolha a classe:");
         for (int i = 0; i < classes.Count; i++)
             Console.WriteLine($"{i + 1} - {classes[i].Nome}");
-        int escolhaClasse = int.Parse(Console.ReadLine()) - 1;
-        personagem.Classe = classes[escolhaClasse];
+        int escolhaClasse = int.Parse(Console.ReadLine()) - 1;*/
+
+        personagem.Classe = Util.EscolherClasse(classes);
 
         // 5 - Rolagem de atributos (4d6 descartando o menor)
-        List<int> RolarAtributos()
-        {
-            Random rnd = new Random();
-            List<int> valores = new List<int>();
-            for (int i = 0; i < 6; i++)
-            {
-                int[] dados = new int[4];
-                for (int j = 0; j < 4; j++)
-                    dados[j] = rnd.Next(1, 7);
-                Array.Sort(dados);
-                valores.Add(dados[1] + dados[2] + dados[3]);
-            }
-            return valores;
-        }
-
-        List<int> valoresRolados = RolarAtributos();
+        List<int> valoresRolados = Util.RolarAtributos();
         Console.WriteLine("\nValores rolados: " + string.Join(", ", valoresRolados));
 
         // Inicializar atributos do personagem
@@ -166,7 +153,9 @@ class Program
         { "Força", "Destreza", "Constituição", "Inteligência", "Sabedoria", "Carisma" };
 
         // 6 - Distribuição manual de atributos
-        DistribuirAtributos(personagem, nomesAtributos, valoresRolados);
+
+
+        Util.DistribuirAtributos(personagem, nomesAtributos, valoresRolados);
 
         // 7 - Aplicar bônus racial
         foreach (var bonus in personagem.Raca.Bonus)
@@ -217,29 +206,7 @@ class Program
             Console.WriteLine($"{pericia.Nome}: {valor} {(proficiente ? "(Proficiente)" : "")}");
         }
     }
-    static void DistribuirAtributos(Personagem personagem, List<string> nomesAtributos, List<int> valoresRolados)
-    {
-        foreach (var nome in nomesAtributos)
-        {
-            int escolhido = -1;
-            while (true)
-            {
-                Console.WriteLine($"\nEscolha o valor para {nome} entre: {string.Join(", ", valoresRolados)}");
-                string input = Console.ReadLine();
-
-                if (int.TryParse(input, out escolhido) && valoresRolados.Contains(escolhido))
-                {
-                    personagem.Atributos.Add(new Atributo { Nome = nome, Valor = escolhido });
-                    valoresRolados.Remove(escolhido);
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("Valor inválido. Tente novamente.");
-                }
-            }
-        }
-    }
+   
 
 }
 
