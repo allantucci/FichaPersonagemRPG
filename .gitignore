@@ -1,0 +1,35 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.sln.docstates
+
+# Build results
+bin/
+obj/
+*.dll
+*.exe
+*.app
+*.log
+
+# Rider
+.idea/
+
+# Pacotes NuGet
+*.nupkg
+*.nuget
+packages/
+
+# Arquivos temporários
+*.tmp
+*.temp
+
+# Arquivos de publish
+*.publish.xml
+
+# Outros
+_ReSharper*/
+*.DotSettings.user
+*.resharper
+*.sdf
+*.cache
