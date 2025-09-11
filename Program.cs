@@ -53,7 +53,7 @@ class Program
 {
     static void Main()
     {
-        // 1 - Lista de raças
+        //Lista de raças
         List<Raca> racas = new List<Raca>()
         {
             new Raca { Nome = "Humano", Bonus = new List<Atributo>
@@ -73,7 +73,7 @@ class Program
             }
         };
 
-        // 2 - Lista de classes
+        // Lista de classes
         List<Classe> classes = new List<Classe>()
         {
             new Classe { Nome = "Guerreiro", QuantidadePericias = 2,
@@ -99,7 +99,7 @@ class Program
             }
         };
 
-        // 3 - Lista geral de perícias do jogo
+        // Lista geral de perícias do jogo
         List<Pericia> todasPericias = new List<Pericia>()
         {
             new Pericia { Nome = "Acrobacia", AtributoLigado = "Destreza" },
@@ -121,18 +121,18 @@ class Program
             new Pericia { Nome = "Furtividade", AtributoLigado = "Destreza" }
         };
 
-        // 4 - Criar personagem
+        // Criar personagem
         Personagem personagem = new Personagem();
 
         Console.Write("Digite o nome do personagem: ");
         personagem.Nome = Console.ReadLine();
 
         // Escolha da raça
-        Console.WriteLine("\nEscolha a raça:");
+       /* Console.WriteLine("\nEscolha a raça:");
         for (int i = 0; i < racas.Count; i++)
             Console.WriteLine($"{i + 1} - {racas[i].Nome}");
-        int escolhaRaca = int.Parse(Console.ReadLine()) - 1;
-        personagem.Raca = racas[escolhaRaca];
+        int escolhaRaca = int.Parse(Console.ReadLine()) - 1;*/
+        personagem.Raca = Util.EscolherRaca(racas);
 
         // Escolha da classe
         /*Console.WriteLine("\nEscolha a classe:");
@@ -142,7 +142,7 @@ class Program
 
         personagem.Classe = Util.EscolherClasse(classes);
 
-        // 5 - Rolagem de atributos (4d6 descartando o menor)
+        //Rolagem de atributos (4d6 descartando o menor)
         List<int> valoresRolados = Util.RolarAtributos();
         Console.WriteLine("\nValores rolados: " + string.Join(", ", valoresRolados));
 
@@ -152,20 +152,23 @@ class Program
         List<string> nomesAtributos = new List<string>
         { "Força", "Destreza", "Constituição", "Inteligência", "Sabedoria", "Carisma" };
 
-        // 6 - Distribuição manual de atributos
+        //Distribuição manual de atributos
 
 
         Util.DistribuirAtributos(personagem, nomesAtributos, valoresRolados);
 
-        // 7 - Aplicar bônus racial
+        //Aplicar bônus racial
+
+        Util.AplicarBonusRacial(personagem);
+        /*
         foreach (var bonus in personagem.Raca.Bonus)
         {
             var atributo = personagem.Atributos.First(a => a.Nome == bonus.Nome);
             atributo.Valor += bonus.Valor;
-        }
+        }*/
 
         // 8 - Escolha de perícias da classe
-        personagem.Pericias = new List<Pericia>();
+       /* 
         Console.WriteLine($"\nEscolha {personagem.Classe.QuantidadePericias} perícias da lista abaixo:");
 
         for (int i = 0; i < personagem.Classe.PericiasDisponiveis.Count; i++)
@@ -177,9 +180,13 @@ class Program
             var pericia = personagem.Classe.PericiasDisponiveis[escolha];
             pericia.Proficiente = true;
             personagem.Pericias.Add(pericia);
-        }
+        }*/
 
-        // 9 - Imprimir ficha
+
+        Util.EscolherPericias(personagem);
+
+
+        //Imprimir ficha
         Console.WriteLine($"\n--- FICHA DE {personagem.Nome} ---");
         Console.WriteLine($"Vida total: {personagem.Classe.VidaInicial + personagem.Atributos.First(a => a.Nome == "Constituição").Modificador}");
         Console.WriteLine($"Raça: {personagem.Raca.Nome}");
