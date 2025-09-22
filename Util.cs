@@ -45,6 +45,7 @@ static class Util
     public static void EscolherPericias(Personagem personagem)
     {
         int qtdEscolhas = personagem.Classe.QuantidadePericias;
+        personagem.Pericias = new List<Pericia>();
 
         Console.WriteLine($"Você deve escolher {qtdEscolhas} perícias:");
 
